@@ -1,0 +1,16 @@
+version: "3.10"
+
+networks:
+  app-network:
+    name: "${DOCKER_NETWORK_NAME}"
+    driver: bridge
+
+services:
+  farmacy-project:
+    image: python:3.10-alpine:latest
+    restart: unless-stopped
+    container_name: "${DOCKER_CONTAINER_NAME}"
+    # environment:
+
+    ports:
+    - "${SERVER_PORT}:8000"
