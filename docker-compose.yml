@@ -1,7 +1,7 @@
 version: "3.7"
 
 services:
-  db-pharmacy: 
+  db_pharmacy: 
     container_name: db_pharmacy
     restart: always
     image: postgrest:latest
@@ -12,6 +12,8 @@ services:
       POSTGRES_PORT: 5432
     ports:
       - "8002:5432"
+    networks:
+      - network_pharmacy
 
   pharmacy:
     container_name: service_pharmacy
@@ -26,3 +28,9 @@ services:
       - ./src:/src
     ports:
       - "8888:8888"
+    networks:
+      - network_pharmacy
+    command: ./entrypoint.sh
+
+  networks:
+    network_pharmacy
