@@ -27,7 +27,7 @@ services:
     volumes:
       - ./src:/src
     ports:
-      - "8888:8888"
+      - "7777:7777"
     networks:
       - network_pharmacy
     command: ./entrypoint.sh
