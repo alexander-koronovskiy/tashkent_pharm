@@ -1,10 +1,7 @@
-import sqlite3
+class ManagesBase:
+    def __init__(self, session):
+        self.session = session
 
-
-class Database:
-    def __init__(self, name):
-        self._conn = sqlite3.connect(name)
-        self._cursor = self._conn.cursor()
 
     def __enter__(self):
         return self
