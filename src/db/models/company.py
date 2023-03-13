@@ -1,7 +1,7 @@
 from database import Base
 from commons import MixinMarkChanges
 
-class Arcticle(Base, MixinMarkChanges):
-    __tablename__ = 'articles'
+class Company(Base, MixinMarkChanges):
+    __tablename__ = ''
     id = Column(Integer, primary_key=True)
-    
+ 

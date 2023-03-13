@@ -20,8 +20,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    env_file:
-      - .env
+    # env_file:
+    #   - .env
+    environment: 
+      SERVER_HOST: 0.0.0.0
+      SERVER_PORT: 7777
+      DB_USER: pharmacy
+      DB_PASSWORD: password
+      DB_HOST: db_pharmacy
+      DB_PORT: 5432
+      DB_NAME: pharmacy
     depends_on:
       - db_pharmacy
     volumes:
@@ -34,4 +42,3 @@ services:
 
 networks:
   network_pharmacy:
-

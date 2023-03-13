@@ -16,4 +16,4 @@ def get_settings_db() -> SettingsDB:
     return SettingsDB()
 
 
-settings_app = get_settings_db()
+settings_db = get_settings_db()

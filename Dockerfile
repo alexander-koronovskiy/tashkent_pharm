@@ -10,6 +10,4 @@ COPY requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt
 
 COPY ./src /src
-#RUN uvicorn --port 7777 --host 0.0.0.0 --loop uvloop --reload main:app
-
 EXPOSE ${SERVER_PORT}
