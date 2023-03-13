@@ -1,5 +1,5 @@
 from database import Base
-from commons import MixinMarkChanges
+from commons import MixinMarkChanges, Column, Integer, String
 
 class User(Base, MixinMarkChanges):
     __tablename__ = 'users'
@@ -8,4 +8,5 @@ class User(Base, MixinMarkChanges):
     name_first =  Column(String(50))
     name_middle =  Column(String(50))
     name_last =  Column(String(50))
-    # id_company
+    
+    id_company = Column(Integer, primary_key=True)
