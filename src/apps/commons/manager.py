@@ -5,11 +5,11 @@ class ManagesBase:
     def execute(self, query):
         self.session.execute(query)
 
-    def create(self, ):
-        pass
+    def create(self, instance):
+        self.session.add(instance)
 
-    def update(self, ):
-        pass
+    def update(self, instance):
+        self.session.add(instance)
 
-    def delete(self, ):
-        pass
+    def delete(self, instance):
+        self.session.delete(instance)
