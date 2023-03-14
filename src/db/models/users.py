@@ -1,6 +1,7 @@
 from database import Base
 from commons import MixinMarkChanges
-from sqlalchemy import Column, Integer, String,ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey
+
 
 class User(Base, MixinMarkChanges):
     __tablename__ = 'users'

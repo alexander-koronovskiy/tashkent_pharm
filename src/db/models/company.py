@@ -1,5 +1,6 @@
 from database import Base
-from commons import MixinMarkChanges, Column, Integer, String, CompanyType, Tinyint
+from commons import MixinMarkChanges
+from sqlalchemy import Column, Integer, String, Tinyint
 
 class Company(Base, MixinMarkChanges):
     __tablename__ = 'companies'

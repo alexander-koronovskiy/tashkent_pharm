@@ -1,6 +1,6 @@
 from database import Base
 from commons import MixinMarkChanges
-from sqlalchemy import Column, Integer, ForeignKey, String
+from sqlalchemy import Column, String, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 from company import Company
 
@@ -8,7 +8,20 @@ from company import Company
 class EntityLegal(Base, MixinMarkChanges):
     __tablename__ = 'entities_legal'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    # todo: add method and shows
+
+    name_legal = Column(String(50))
+    tin = Column(Integer)   # 16 ИНН; 24 (до 32 для рассчетного счета)
+    name_bank = Column(String(50))
+
+    account = Column(String(50))
+    email = Column(String(50))
+    phone = Column(String(50))
+
+    country = Column(String(50))
+    city = Column(String(50))
+    street = Column(String(50))
+    unit = Column(String(50))
+    apartament = Column(String(50))
 
     companies = relationship(
         Company,
