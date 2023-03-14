@@ -1,0 +1,36 @@
+version: "3.7"
+
+services:
+  db_pharmacy: 
+    container_name: db_pharmacy
+    restart: always
+    image: postgrest:latest
+    environment: 
+      POSTGRES_USER: pharmacy
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: pharmacy
+      POSTGRES_PORT: 5432
+    ports:
+      - "8002:5432"
+    networks:
+      - network_pharmacy
+
+  pharmacy:
+    container_name: service_pharmacy
+    build:
+      context: .
+      dockerfile: dockerfile
+    env_file: 
+      - .env
+    depends_on:
+      - db_pharmacy
+    volumes:
+      - ./src:/src
+    ports:
+      - "7777:7777"
+    networks:
+      - network_pharmacy
+    command: ./entrypoint.sh
+
+  networks:
+    network_pharmacy
