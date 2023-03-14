@@ -1,4 +1,4 @@
-from sqlalchemy import Column, DateTime, Boolean, String, Integer
+from sqlalchemy import Column, DateTime, Boolean, Integer
 from sqlalchemy.sql import func
 
 
@@ -8,7 +8,3 @@ class MixinMarkChanges:
     created_by = Column(Integer)
     updated_by = Column(Integer)
     is_deleted = Column(Boolean, default=False)
-
-
-class CompanyType(String):
-    pass
