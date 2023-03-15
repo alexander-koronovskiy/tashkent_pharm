@@ -1,8 +1,8 @@
-from database import Base
-from commons import MixinMarkChanges
+from db.database import Base
+from db.models.commons import MixinMarkChanges
 from sqlalchemy import Column, String, Integer, ForeignKey
 from sqlalchemy.orm import relationship
-from company import Company
+from db.models.company import Company
 
 
 class EntityLegal(Base, MixinMarkChanges):
@@ -21,7 +21,7 @@ class EntityLegal(Base, MixinMarkChanges):
     city = Column(String(50))
     street = Column(String(50))
     unit = Column(String(50))
-    apartament = Column(String(50))
+    apartment = Column(String(50))
 
     companies = relationship(
         Company,
@@ -32,8 +32,8 @@ class EntityLegal(Base, MixinMarkChanges):
     )
 
 
-class EntityLegalToCompany(Base, MixinMarkChanges):
+class EntityLegalToCompany(Base):
     __tablename__ = 'entities_legal_to_companies'
     id = Column(Integer, primary_key=True, autoincrement=True)
     id_company = Column(Integer, ForeignKey('companies.id'), nullable=False)
-    id_entity_legal = Column(Integer, ForeignKey('entities.id'), nullable=False)
+    id_entity_legal = Column(Integer, ForeignKey('entities_legal.id'), nullable=False)
