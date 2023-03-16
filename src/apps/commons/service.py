@@ -1,9 +1,5 @@
 from apps.commons.manager import ManagerBase as manager_base
 
-from src.db.models.users import *
-from src.db.models.entity_legal import *
-from src.db.models.company import *
-from src.db.models.arcticles import *
 import pydantic
 from typing import Any
 
@@ -58,4 +54,4 @@ class BaseService:
         Что делает: Удаляет (мягко или окончательно) сущность из базы
         Возвращает: Ничего
         """
-        return manager_base.update(self.model.id)
+        return manager_base.delete(self.model.id)
