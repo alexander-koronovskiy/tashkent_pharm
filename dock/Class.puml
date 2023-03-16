@@ -1,0 +1,186 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam linetype ortho
+skinparam nodesep 20
+left to right direction
+
+together {
+
+    package "commons" {
+
+        class ManagerBase {
+            + Any execute(query: BinaryExpression)
+            + Base create(instance: Base)
+            + Base update(instance, data_update: dict)
+            + Base delete(instance: Base)
+        }
+
+        class ServiceBase {
+            + Type[Base] MODEL
+
+            + __init__(manager: ManagerBase):
+
+            + Select[Any] select(*selects)
+
+            + MODEL create(data: pydantic.BaseModel)
+            + MODEL update(id: int, data: dict)
+
+            + MODEL get(id: int) -> MODEL:
+            + list[MODEL] list(model_filter: pydantic.BaseModel)
+
+            + delete(id: int)
+            + delete_completely(id: int)
+        }
+    }
+}
+
+together {
+
+    package "db" {
+        package "models" {
+            class User
+            class EntityLegal
+            class EntityLegalToCompany
+            class Company
+        }
+    }
+
+}
+
+together {
+    package "user" {
+        class ServiceUser {
+            + User MODEL
+
+            + __init__(manager: ManagerBase):
+
+            + Select[Any] select(*selects)
+
+            + User create(data: UserCreate)
+            + User update(id: int, data: UserUpdate)
+
+            + User get(id: int) -> User:
+            + list[MODEL] list(model_filter: UserFilter)
+
+            + delete(id: int)
+            + delete_completely(id: int)
+        }
+        package "schemas" {
+            class UserCreate
+            class UserUpdate
+            class UserFilter
+            class UserShort
+            class UserDetailed
+        }
+
+        UserCreate -right-> ServiceUser::create : input
+        UserUpdate -right-> ServiceUser::update : input
+        UserFilter -right-> ServiceUser::list : input
+    }
+
+    package "entity_legal" {
+        class ServiceEntityLegal {
+            + EntityLegal MODEL
+
+            + __init__(manager: ManagerBase):
+
+            + Select[Any] select(*selects)
+
+            + EntityLegal create(data: EntityLegalCreate)
+            + EntityLegal update(id: int, data: EntityLegalUpdate)
+
+            + EntityLegal get(id: int) -> EntityLegal:
+            + list[MODEL] list(model_filter: EntityLegalFilter)
+
+            + delete(id: int)
+            + delete_completely(id: int)
+        }
+        package "schemas" {
+            class EntityLegalCreate
+            class EntityLegalUpdate
+            class EntityLegalFilter
+            class EntityLegalShort
+            class EntityLegalDetailed
+        }
+
+        EntityLegalCreate --> ServiceEntityLegal::create : input
+        EntityLegalUpdate --> ServiceEntityLegal::update : input
+        EntityLegalFilter --> ServiceEntityLegal::list : input
+    }
+
+    package "pharmacy" {
+        class ServicePharmacy {
+            + Company MODEL
+
+            + __init__(manager: ManagerBase):
+
+            + Select[Any] select(*selects)
+
+            + Company create(data: PharmacyCreate)
+            + Company update(id: int, data: PharmacyUpdate)
+
+            + Company get(id: int) -> Company:
+            + list[MODEL] list(model_filter: PharmacyFilter)
+
+            + delete(id: int)
+            + delete_completely(id: int)
+        }
+        package "schemas" {
+            class PharmacyCreate
+            class PharmacyUpdate
+            class PharmacyFilter
+            class PharmacyShort
+            class PharmacyDetailed
+        }
+
+        PharmacyCreate --> ServicePharmacy::create : input
+        PharmacyUpdate --> ServicePharmacy::update : input
+        PharmacyFilter --> ServicePharmacy::list : input
+    }
+
+    package "distributor" {
+        class ServiceDistributor {
+            + Company MODEL
+
+            + __init__(manager: ManagerBase):
+
+            + Select[Any] select(*selects)
+
+            + Company create(data: DistributorCreate)
+            + Company update(id: int, data: DistributorUpdate)
+
+            + Company get(id: int) -> Company:
+            + list[MODEL] list(model_filter: DistributorFilter)
+
+            + delete(id: int)
+            + delete_completely(id: int)
+        }
+        package "schemas" {
+            class DistributorCreate
+            class DistributorUpdate
+            class DistributorFilter
+            class DistributorShort
+            class DistributorDetailed
+        }
+
+        DistributorCreate --> ServiceDistributor::create : input
+        DistributorUpdate --> ServiceDistributor::update : input
+        DistributorFilter --> ServiceDistributor::list : input
+    }
+}
+
+
+ServiceBase <.. ManagerBase : input
+
+ServiceUser <|------- ServiceBase : inheritance
+ServiceEntityLegal <|------- ServiceBase : inheritance
+ServicePharmacy <|------- ServiceBase : inheritance
+ServiceDistributor <|------- ServiceBase : inheritance
+
+
+ServiceUser::MODEL <-- User
+ServiceEntityLegal::MODEL <-- EntityLegal
+ServiceEntityLegal::MODEL <-- EntityLegalToCompany
+ServicePharmacy::MODEL <-- Company
+ServiceDistributor::MODEL <-- Company
+@enduml
