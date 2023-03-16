@@ -1,21 +1,31 @@
 from apps.commons.manager import ManagerBase as manager_base
 
+from src.db.models.users import *
+from src.db.models.entity_legal import *
+from src.db.models.company import *
+from src.db.models.arcticles import *
+import pydantic
+from typing import Any
+
 
 class BaseService:
+
+    def __init__(self, model: pydantic.BaseModel):
+        self.model = model
 
     @property
     def query_basic(self):
         # Содержит базовый SQL-Alchemy запрос отсекающий мягко удаленные объекты.
         # Все запросы для вычитки должны брать за основу этот запрос.
-        yield
+        pass
 
-    async def create_post(self, model, data: dict):
+    async def create(self, query: dict):
         """
         Принимает на вход: Pydantic модель сущности
         Что делает: Создает в бд новую сущность с данными из переданной модели
         Возвращает: Инстанс модели
         """
-        return await manager_base(model).create(data)
+        return manager_base.create(self.model)
 
     def get(self, key: str, default: Any) -> Any:
         """
@@ -23,9 +33,10 @@ class BaseService:
         Что делает: Возвращает модель сущности с переданным ID
         Возвращает: Инстанс модели
         """
+        # return manager_base.create(self.model.id)
         pass
 
-    def filter(self):
+    def filter(self, filter: Any):
         """
         list Принимает на вход: Pydantic модель фильтра сущности
         Что делает: Возвращает список моделей сущностей подходящих под условия фильтрации
@@ -33,18 +44,18 @@ class BaseService:
         """
         pass
 
-    def update(self, model_id, data: dict):
+    def update(self, data: dict):
         """
         update Принимает на вход: ID сущности, Pydantic модель для обновления
         Что делает: Обновляет сущность с переданным ID данными из Pydantic модели
         Возвращает: Инстанс модели
         """
-        return await manager_base(model_id).update(data)
+        return manager_base.update(self.model, data)
 
-    def delete(self, model_id, data: dict):
+    def delete(self):
         """
         delete Принимает на вход: ID сущности
         Что делает: Удаляет (мягко или окончательно) сущность из базы
         Возвращает: Ничего
         """
-        return await manager_base(model_id).delete()
+        return manager_base.update(self.model.id)
