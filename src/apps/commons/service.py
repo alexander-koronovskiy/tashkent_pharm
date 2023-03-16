@@ -23,7 +23,8 @@ class ServiceBase:
         return await self.manager.create(instance)
 
     async def get(self, model_id: str) -> MODEL:
-        return await self.select().where(self.MODEL.id == model_id)
+        instance = self.select().where(self.MODEL.id == model_id)
+        return await self.manager.execute(instance)
 
     def list(self, model_filter: pydantic.BaseModel):
         return await self.select().where(self.MODEL.id == model_filter)
