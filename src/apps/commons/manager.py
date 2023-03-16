@@ -8,8 +8,8 @@ class ManagerBase:
     def __init__(self, session: AsyncSession):
         self.session = session
 
-    def execute(self, query: Executable):
-        return self.session.execute(query)
+    async def execute(self, query: Executable):
+        return await self.session.execute(query)
 
     async def create(self, instance: Base):
         self.session.add(instance)
