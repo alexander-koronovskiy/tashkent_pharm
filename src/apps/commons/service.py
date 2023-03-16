@@ -1,27 +1,34 @@
-from apps.commons.manager import ManagerBase as manager_base
-
+from sqlalchemy import BinaryExpression, select, Select
 import pydantic
-from typing import Any
+from typing import Any, Type, Union, Tuple
+
+from apps.commons.manager import ManagerBase
+from db.database import Base
 
 
-class BaseService:
+class ServiceBase:
 
-    def __init__(self, model: pydantic.BaseModel):
-        self.model = model
+    MODEL: Type[Base] = None
 
-    @property
-    def query_basic(self):
+    def __init__(self, manager: ManagerBase):
+        self.manager = manager
+
+    def select(self, *selects) -> Select[Any]:
         # Содержит базовый SQL-Alchemy запрос отсекающий мягко удаленные объекты.
         # Все запросы для вычитки должны брать за основу этот запрос.
-        pass
+        if not selects:
+            selects = self.MODEL,
+        return select(*selects).where(self.MODEL.is_deleted.is_(False))
 
-    async def create(self, query: dict):
+    async def create(self, data: pydantic.BaseModel) -> MODEL:
         """
         Принимает на вход: Pydantic модель сущности
         Что делает: Создает в бд новую сущность с данными из переданной модели
         Возвращает: Инстанс модели
         """
-        return manager_base.create(self.model)
+        # u1 = U# (name="pkrabs", fullname="Pearl Krabs")
+        instance = self.MODEL(data.dict(exclude_unset=True))
+        return await self.manager.create(instance)
 
     def get(self, key: str, default: Any) -> Any:
         """
@@ -32,12 +39,14 @@ class BaseService:
         # return manager_base.create(self.model.id)
         pass
 
-    def filter(self, filter: Any):
+    def list(self, filter: Any):
         """
         list Принимает на вход: Pydantic модель фильтра сущности
         Что делает: Возвращает список моделей сущностей подходящих под условия фильтрации
         Возвращает: Список инстансов модели
         """
+        # self.select().where()...
+        # pydantics model with filters
         pass
 
     def update(self, data: dict):
@@ -46,7 +55,9 @@ class BaseService:
         Что делает: Обновляет сущность с переданным ID данными из Pydantic модели
         Возвращает: Инстанс модели
         """
-        return manager_base.update(self.model, data)
+        # instance = self.MODEL(data.dict(exclude_unset=True))
+        # return await self.manager.update(instance)
+        pass
 
     def delete(self):
         """
@@ -54,4 +65,5 @@ class BaseService:
         Что делает: Удаляет (мягко или окончательно) сущность из базы
         Возвращает: Ничего
         """
-        return manager_base.delete(self.model.id)
+        # return manager_base.delete(self.model.id)
+        pass
