@@ -1,9 +1,10 @@
 from sqlalchemy import select, Select
 import pydantic
-from typing import Any, Type
+from typing import Any, Type, List
 
 from apps.commons.manager import ManagerBase
 from db.database import Base
+import asyncio
 
 
 class ServiceBase:
@@ -26,13 +27,22 @@ class ServiceBase:
         instance = self.select().where(self.MODEL.id == model_id)
         return await self.manager.execute(instance)
 
-    def list(self, model_filter: pydantic.BaseModel):
-        return await self.select().where(self.MODEL.id == model_filter)
+    async def list(self, model_filter: pydantic) -> List[MODEL]:
+        model_list = []
+        for condition in model_filter:
+            instance = self.select().where(condition)
+            model_list = await asyncio.gather(self.manager.execute(instance))
+        return model_list
 
     async def update(self, model_id: str, data: dict):
         instance = self.get(model_id)
         return await self.manager.update(instance, data)
 
-    def delete(self, model_id: str):
+    async def delete_completely(self, model_id: str):
         instance = self.get(model_id)
         return await self.manager.delete(instance)
+
+    async def delete(self, model_id: str):
+        # instance = self.update(model_id)
+        # return await self.manager.delete(instance)
+        pass
