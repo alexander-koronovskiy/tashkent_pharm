@@ -23,24 +23,23 @@ class ServiceBase:
         instance = self.MODEL(data.dict(exclude_unset=True))
         return await self.manager.create(instance)
 
-    async def get(self, model_id: str) -> MODEL:
-        instance = self.select().where(self.MODEL.id == model_id)
+    async def get(self, id_instance: int) -> MODEL:
+        instance = self.select().where(self.MODEL.id == id_instance)
         return await self.manager.execute(instance)
 
-    async def list(self, model_filter: pydantic) -> List[MODEL]:
-        model_list = []
-        for condition in model_filter:
-            instance = self.select().where(condition)
-            model_list = await asyncio.gather(self.manager.execute(instance))
-        return model_list
-
-    async def update(self, model_id: str, data: dict):
-        instance = self.get(model_id)
+    async def update(self, id_instance: int, data: dict):
+        instance = self.get(id_instance)
         return await self.manager.update(instance, data)
 
-    async def delete_completely(self, model_id: str) -> MODEL:
-        instance = self.get(model_id)
+    async def list(self, model_filter: pydantic) -> List[MODEL]:
+        instances = self.select().where(model_filter)
+        return await self.manager.execute(instances)
+
+
+    async def delete_completely(self, instance: ) -> MODEL:
+        instance = self.get(instance)
         return await self.manager.delete(instance)
 
-    async def delete(self, model_id: str) -> MODEL:
-        return await self.manager.update(model_id, {self.MODEL.is_deleted: True})
+    async def delete(self, id_instance: int) -> MODEL:
+        instance = self.get(id_instance)
+        return await self.manager.update(instance, {self.MODEL.is_deleted: True})
