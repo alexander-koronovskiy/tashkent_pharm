@@ -35,7 +35,6 @@ class ServiceBase:
         instances = self.select().where(model_filter)
         return await self.manager.execute(instances)
 
-
     async def delete_completely(self, instance: ) -> MODEL:
         instance = self.get(instance)
         return await self.manager.delete(instance)
