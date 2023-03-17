@@ -38,11 +38,9 @@ class ServiceBase:
         instance = self.get(model_id)
         return await self.manager.update(instance, data)
 
-    async def delete_completely(self, model_id: str):
+    async def delete_completely(self, model_id: str) -> MODEL:
         instance = self.get(model_id)
         return await self.manager.delete(instance)
 
-    async def delete(self, model_id: str):
-        # instance = self.update(model_id)
-        # return await self.manager.delete(instance)
-        pass
+    async def delete(self, model_id: str) -> MODEL:
+        return await self.manager.update(model_id, {self.MODEL.is_deleted: True})
