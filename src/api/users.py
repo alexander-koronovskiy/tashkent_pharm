@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from apps.users.services import ServiceUser
 from db.database import get_session
 
-router = APIRouter(prefix='/users', tags=['Users'])
+router = APIRouter(prefix='/users', tags=['User'])
 
 
 @router.post(
@@ -15,7 +15,7 @@ router = APIRouter(prefix='/users', tags=['Users'])
     name='Create User',
     operation_id='create_user',
     response_model=UserDetailed,
-    tags=['user'],
+    tags=['User'],
     status_code=201,
 )
 async def save(
