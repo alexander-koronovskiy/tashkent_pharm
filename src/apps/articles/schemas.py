@@ -1,24 +1,29 @@
 from pydantic import BaseModel, constr
 
 
-class UserCreate(BaseModel):
-   pass
+class ArcticleCreate(BaseModel):
+    type = constr(max_length=50)
+    description = constr(max_length=50)
 
 
-class UserUpdate(BaseModel):
-    pass
+class ArcticleUpdate(BaseModel):
+    type = constr(max_length=50)
+    description = constr(max_length=50)
 
 
-class UserFilter(BaseModel):
-    pass
+class ArcticleFilter(BaseModel):
+    type = constr(max_length=50)
+    description = constr(max_length=50)
 
 
-class UserShort(BaseModel):
-    pass
+class ArcticleShort(BaseModel):
+    type = constr(max_length=50)
+    description = constr(max_length=50)
 
 
-class UserDetailed(BaseModel):
-    pass
+class ArcticleDetailed(BaseModel):
+    type = constr(max_length=50)
+    description = constr(max_length=50)
 
     class Config:
         orm_mode = True
