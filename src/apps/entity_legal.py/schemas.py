@@ -1,7 +1,8 @@
 from pydantic import BaseModel, constr, conint
+from apps.commons.schemas import MixinMarkChanges
 
 
-class EntityLegalCreate(BaseModel):
+class EntityLegalCreate(BaseModel, MixinMarkChanges):
     name_legal: constr(max_length=50)
     tin: conint(gt=16, lt=32)   # 16 ИНН; 24 (до 32 для рассчетного счета)
     name_bank: constr(max_length=50)
@@ -17,7 +18,7 @@ class EntityLegalCreate(BaseModel):
     apartment: constr(max_length=50)
 
 
-class EntityLegalUpdate(BaseModel):
+class EntityLegalUpdate(BaseModel, MixinMarkChanges):
     name_legal: constr(max_length=50)
     tin: conint(gt=16, lt=32)   # 16 ИНН; 24 (до 32 для рассчетного счета)
     name_bank: constr(max_length=50)
@@ -33,7 +34,7 @@ class EntityLegalUpdate(BaseModel):
     apartment: constr(max_length=50)
 
 
-class EntityLegalFilter(BaseModel):
+class EntityLegalFilter(BaseModel, MixinMarkChanges):
     name_legal: constr(max_length=50)
     tin: conint(gt=16, lt=32)   # 16 ИНН; 24 (до 32 для рассчетного счета)
     name_bank: constr(max_length=50)
@@ -49,7 +50,7 @@ class EntityLegalFilter(BaseModel):
     apartment: constr(max_length=50)
 
 
-class EntityLegalShort(BaseModel):
+class EntityLegalShort(BaseModel, MixinMarkChanges):
     name_legal: constr(max_length=50)
     tin: conint(gt=16, lt=32)   # 16 ИНН; 24 (до 32 для рассчетного счета)
     name_bank: constr(max_length=50)
@@ -65,7 +66,7 @@ class EntityLegalShort(BaseModel):
     apartment: constr(max_length=50)
 
 
-class EntityLegalDetailed(BaseModel):
+class EntityLegalDetailed(BaseModel, MixinMarkChanges):
     name_legal: constr(max_length=50)
     tin: conint(gt=16, lt=32)   # 16 ИНН; 24 (до 32 для рассчетного счета)
     name_bank: constr(max_length=50)

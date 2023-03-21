@@ -1,27 +1,28 @@
 from pydantic import BaseModel, constr
+from apps.commons.schemas import MixinMarkChanges
 
 
-class ArcticleCreate(BaseModel):
+class ArcticleCreate(BaseModel, MixinMarkChanges):
     type: constr(max_length=50)
     description: constr(max_length=50)
 
 
-class ArcticleUpdate(BaseModel):
+class ArcticleUpdate(BaseModel, MixinMarkChanges):
     type: constr(max_length=50)
     description: constr(max_length=50)
 
 
-class ArcticleFilter(BaseModel):
+class ArcticleFilter(BaseModel, MixinMarkChanges):
     type: constr(max_length=50)
     description: constr(max_length=50)
 
 
-class ArcticleShort(BaseModel):
+class ArcticleShort(BaseModel, MixinMarkChanges):
     type: constr(max_length=50)
     description: constr(max_length=50)
 
 
-class ArcticleDetailed(BaseModel):
+class ArcticleDetailed(BaseModel, MixinMarkChanges):
     type: constr(max_length=50)
     description: constr(max_length=50)
 

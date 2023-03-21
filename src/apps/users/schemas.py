@@ -1,7 +1,8 @@
 from pydantic import BaseModel, constr
+from apps.commons.schemas import MixinMarkChanges
 
 
-class UserCreate(BaseModel):
+class UserCreate(BaseModel, MixinMarkChanges):
     name_first: constr(max_length=50)
     name_middle: constr(max_length=50)
     name_last: constr(max_length=50)
@@ -9,7 +10,7 @@ class UserCreate(BaseModel):
     id_company: int
 
 
-class UserUpdate(BaseModel):
+class UserUpdate(BaseModel, MixinMarkChanges):
     name_first: constr(max_length=50)
     name_middle: constr(max_length=50)
     name_last: constr(max_length=50)
@@ -17,7 +18,7 @@ class UserUpdate(BaseModel):
     id_company: int
 
 
-class UserFilter(BaseModel):
+class UserFilter(BaseModel, MixinMarkChanges):
     name_first: constr(max_length=50)
     name_middle: constr(max_length=50)
     name_last: constr(max_length=50)
@@ -25,7 +26,7 @@ class UserFilter(BaseModel):
     id_company: int
 
 
-class UserShort(BaseModel):
+class UserShort(BaseModel, MixinMarkChanges):
     name_first: constr(max_length=50)
     name_middle: constr(max_length=50)
     name_last: constr(max_length=50)
@@ -33,7 +34,7 @@ class UserShort(BaseModel):
     id_company: int
 
 
-class UserDetailed(BaseModel):
+class UserDetailed(BaseModel, MixinMarkChanges):
     name_first: constr(max_length=50)
     name_middle: constr(max_length=50)
     name_last: constr(max_length=50)
@@ -41,7 +42,7 @@ class UserDetailed(BaseModel):
     id_company: int
 
     class Config:
-        orm_mode = True
+        orm_mode: True
 
 
 # при фильтрации все поля опциональны

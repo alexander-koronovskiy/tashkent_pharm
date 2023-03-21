@@ -1,23 +1,24 @@
 from pydantic import BaseModel, constr
+from apps.commons.schemas import MixinMarkChanges
 
 
-class PharmacyCreate(BaseModel):
+class PharmacyCreate(BaseModel, MixinMarkChanges):
     title: constr(max_length=50)
     
 
-class PharmacyUpdate(BaseModel):
+class PharmacyUpdate(BaseModel, MixinMarkChanges):
     title: constr(max_length=50)
 
 
-class PharmacyFilter(BaseModel):
+class PharmacyFilter(BaseModel, MixinMarkChanges):
     title: constr(max_length=50)
 
 
-class PharmacyShort(BaseModel):
+class PharmacyShort(BaseModel, MixinMarkChanges):
     title: constr(max_length=50)
     
 
-class PharmacyDetailed(BaseModel):
+class PharmacyDetailed(BaseModel, MixinMarkChanges):
     title: constr(max_length=50)
 
     class Config:
