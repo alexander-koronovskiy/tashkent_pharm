@@ -10,8 +10,8 @@ class MixinMarkChanges:
 
     @declared_attr
     def created_by(cls):
-        return Column(Integer, ForeignKey('users.id'), nullable=False)
+        return Column(Integer, nullable=True)  # todo: change to false
 
     @declared_attr
     def updated_by(cls):
-        return Column(Integer, ForeignKey('users.id'), nullable=False)
+        return Column(Integer, nullable=True)  # todo: change to false
