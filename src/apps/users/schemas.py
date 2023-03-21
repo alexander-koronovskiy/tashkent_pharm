@@ -8,9 +8,29 @@ class UserCreate(BaseModel):
 
     id_company: int
 
-# class UserUpdate
-# class UserFilter
-# class UserShort
+
+class UserUpdate(BaseModel):
+    name_first: constr(max_length=50)
+    name_middle: constr(max_length=50)
+    name_last: constr(max_length=50)
+
+    id_company: int
+
+
+class UserFilter(BaseModel):
+    name_first: constr(max_length=50)
+    name_middle: constr(max_length=50)
+    name_last: constr(max_length=50)
+
+    id_company: int
+
+
+class UserShort(BaseModel):
+    name_first: constr(max_length=50)
+    name_middle: constr(max_length=50)
+    name_last: constr(max_length=50)
+
+    id_company: int
 
 
 class UserDetailed(BaseModel):

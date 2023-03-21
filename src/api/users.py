@@ -25,3 +25,21 @@ async def save(
     manager = ManagerBase(session)
     service = ServiceUser(manager)
     return await service.create(data)
+
+
+# @router.post(
+#     path='',
+#     name='Create User',
+#     operation_id='create_user',
+#     response_model=UserDetailed,
+#     tags=['User'],
+#     status_code=201,
+# )
+# async def save(
+#         data: UserCreate,
+#         session: AsyncSession = Depends(get_session)
+# ) -> UserDetailed:
+#     manager = ManagerBase(session)
+#     service = ServiceUser(manager)
+#     return await service.create(data)
+
