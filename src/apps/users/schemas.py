@@ -42,7 +42,7 @@ class UserDetailed(BaseModel, MixinMarkChanges):
     id_company: int
 
     class Config:
-        orm_mode: True
+        orm_mode = True
 
 
 # при фильтрации все поля опциональны

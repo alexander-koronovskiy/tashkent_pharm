@@ -27,7 +27,7 @@ class ArcticleDetailed(BaseModel, MixinMarkChanges):
     description: constr(max_length=50)
 
     class Config:
-        orm_mode: True
+        orm_mode = True
 
 
 # при фильтрации все поля опциональны

@@ -22,4 +22,4 @@ class PharmacyDetailed(BaseModel, MixinMarkChanges):
     title: constr(max_length=50)
 
     class Config:
-        orm_mode: True
+        orm_mode = True
